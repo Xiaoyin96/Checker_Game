@@ -1,7 +1,3 @@
-# ECE141-WI20-Assignment5
-## It's all fun and games until somebody gets hurt...
-### Assignment due March 15, 11:15pm (PST)
-
 ## Let's Play Checkers
 
 ### Rules of the Game
@@ -74,40 +70,6 @@ The `Game` class is responsible for running the game. Each player gets a turn to
      0   1   2   3   4   5   6   7
 ```
 
-## Your Challenge
-
-So far, all of your programming assignments have involved building classes that collectively solve a given problem. This assignment is a little different, because your solution must "plug-in" to an existing framework. Framework-oriented solutions are commonplace in the professional world, and you'll surely encounter many of them during your career. In a framework-oriented solution, the _framework_ is responsible for overall control of the process, and your code plugs into the framework to help make decisions as necessary. This is referred to as an "inversion of control". 
-
-In this challenge, you (and a partner if you so choose) will implement a "checker-bot" class that competes in a game of Checkers. During the course of play, your checker-bot will be given alternating "turns" to move one game piece on the board. Gameplay will continue until a terminal condition occurs:
-
-1. A checker-bot wins the game if it can eliminate all the opponents pieces from the board
-2. A checker-bot forfeits the game by making an illegal move, or when it's detected trying to cheat 
-3. A checker-bot forfeits if it takes too long to decide which move to make
-
-#### Hey, This sounds HARD -- this isn't an AI class!
-
-Yeah, you're right, we haven't taught you any AI techniques. So your checker-bot is NOT expected (or permitted) to use any form of machine learning, neural-net, or other technique found in the AI playbook. Still, a clever algorithm and well-chosen data structure can help to  win the game. Note: for those of you so inclined, you are not prevented from developing your own AI algorithms from scratch. Who knows, you may even invent a cool new technique. :)
-
-In order to successfully complete this challenge -- your checker-bot must, at a minimum, correctly apply the rules of the game, and successively choose a valid piece per turn, and indicate a valid move within the time limit. A trivial solution would merely move any available piece to the first valid (unoccupied) square. You won't likely win, but your checker-bot will meet the minimum requirements. 
-
-Just so you don't panic -- it's been shown that a trivial (and rather dumb) implementation of the `Player` class can be written in under 100 lines of code. Most of the time you spending on this project will involve determining the _best_ piece to moved, whether to perform a jump (if required), and the possible board location destination(s) where the piece will come to rest.
-
-## Implementation Details
-
-This game is an example of the `Inversion of Control` design pattern. Unlike most of the code you write -- you are not in control of the main loop of this game. Your `Player` will get called each time it is your turn to move. 
-
-1. You will build a subclass of Player. Your class **must** be named after you. In my case, it's RickgPlayer.  
-2. In the main.cpp file (provided), you create two instances of your player, and pass it to the `Game->run(p1,p2)` method.
-3. Your checker-bot will be called alternatively against an opponent (during your testing, you'll compete against yourself)
-4. Your checker-bot will decide what to do, and tell the game engine your decision by calling `movePieceTo()`.
-5. If your code is smart enough, you can execute a "double-jump" if your opponent's pieces are exposed for such a maneuver. 
-6. You may **NOT** alter any file in the assignment other than your own `Player` files, without expressed permission.
-7. You may **NOT** attempt to directly alter properties of any `Piece` or `Tile` on the board. Changes are made by calls to the `movePieceTo()` method. 
-
-During each your turn, your `Player::takeTurn(Game &aGame)` method will be called. You will have a limited amount of time to identify and indicate your move decision.  
-
-> NOTE: While we appreciate the hacker ethic and acknowledge the joy of defeating a dumb game engine, any checker-bot caught trying to  cheat will be dealt with approprirately. Most likely, the checker-bot will be forced to work eternally as embedded code at a McDonald's restaurant drive-through window. In other words, if your checker-bot intends to cheat, make sure it does _not_ get caught.
-
 ### Examining the gameboard
 
 At the start of your turn, the game calls your `Player.takeTurn(const Game &aGame)` method call. During your turn, you can use the `Game` interface to get access to information about the state of the game (board, tiles, pieces) -- and to tell the `Game` your move.
@@ -153,36 +115,4 @@ If you are moving a piece, it is essential that you are moving a valid piece to 
 
 If you try to jump an opponent's `Piece`, it is essential that the `Piece` is valid, that you are jumping an diagonally adjacent piece of your opponent, and that you are landing on an unoccupied location. It's also worth noting that if you are jumping, it's possible to jump more than one `Piece` in a sequence. It is therefore allowable to call `Game.movePieceTo()` more than once (for your same `Piece`) in a single turn.
 
-### Testing your solution
-
-During testing, your checker-bot will be playing against another instance of your own `Player`. If you like, you can create a second checker-bot that utilizes a different strategy and test against that. This approach may help you optimize your move decision algorithm.
-
-### Getting help
-
-Come to office hours. Ask questions on Slidespace.io. Talk to your TA. Come to a Dojo.
-
-## Submitting your work - Due March 15, 11:15pm (PST)
-
-As usual, you must do your own work (well, you and your partner's work), and you cannot use code or libraries provided by anyone else, so no peeking on stackoverflow.  However, you MAY use any of the standard C++ (STL) libraries, like vectors, lists, maps, and so on.  You may of course discuss your solution with other students, TA, teachers, Uber drivers, baristas, bartenders, athletes, librarians, aliens, family pets, house plants, or other-worldly spirits. Do **NOT** under any circumstances take code (or code fragments) from anyone or anywhere. 
-
-Vlad-the-compiler is eagerly awaiting a chance to meet your checker-bot in person. 
-
-> NOTE: Don't forget to fill out your students.json file with your name and your partner's name (if you worked with one). Also -- make sure to submit your work to github and gradescope as usual.
-
-### Grading 
-
-Grading will follow the usual process. Vlad-the-compiler will make and run your solution, and do validation:
-
-1. Your solution must compile (using make) and run without crashing - 40pts
-2. Your solution always chooses a valid piece and a valid move/jump destination - 30pts
-3. Your solution doesn't violate the rules of the game, such as the move/jump rule - 20pts
-4. Your solution attempts to optimize the piece/destination phase to make a "better" choice amongst alternatives - 10pts
-
-> NOTE: We have included a makefile for you mac/unix users.  This can help you ensure you code works outside the IDE.
-
-### Winning Checker-Bot
-All the checker-bots will be automatically entered into our 3rd Annual Checker-bot Tournament. The tournament will follow the normal single-elimination (brackets) process against all the other student submissions. Each match will be conducted on a best-out-of-5 series. The student who submits the winning checker-bot will win the coveted, "Ultimate Nerd" award (with a $10 amazon gift card). Their name shall be enscribed on the wall of "Moderately-embarrassed" winners for future generations to gaze upon with bewilderment.
-
-### The Obnoxiously Clever Award
-After reviewing the student submissions, your judging panel will discuss the most interesting, promising, and downright evil solutions we find. If (and only if) a submission is determined to be more cleverer than all the others, we will (optionally) award the "Kermit-the-Frog" award for late-night hacking (also with a $10 amazon gift card). **NOTE**: Kermit holds a PhD in CS, and is not easily impressed.
 
